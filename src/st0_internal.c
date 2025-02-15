@@ -11,6 +11,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #define ST0_INTERNAL
 #include "st0.h"
 
+/* Praise The Machine Spirit for this macro abomination not to break */
+
 #define ST0_MACRO_LIST_CREATE(type, typename) \
 typename* list_ptr = malloc(sizeof(*list_ptr)); \
 int i; \
