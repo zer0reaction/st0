@@ -37,17 +37,17 @@ typedef void st0_list_int32;
 /* uint32 list */
 
 st0_list_uint32* st0_list_uint32_create(uint32_t size);
-void st0_list_uint32_destroy(st0_list_uint32* list_ptr);
-void st0_list_uint32_set(st0_list_uint32* list_ptr, uint32_t pos, uint32_t val);
-uint32_t st0_list_uint32_get(st0_list_uint32* list_ptr, uint32_t pos);
-void st0_list_uint32_append(st0_list_uint32* list_ptr, uint32_t val);
+void             st0_list_uint32_destroy(st0_list_uint32* list_ptr);
+void             st0_list_uint32_set(st0_list_uint32* list_ptr, uint32_t pos, uint32_t val);
+uint32_t         st0_list_uint32_get(st0_list_uint32* list_ptr, uint32_t pos);
+void             st0_list_uint32_append(st0_list_uint32* list_ptr, uint32_t val);
 
 /* int32 list */
 
 st0_list_int32* st0_list_int32_create(uint32_t size);
-void st0_list_int32_destroy(st0_list_int32* list_ptr);
-void st0_list_int32_set(st0_list_int32* list_ptr, uint32_t pos, int32_t val);
-int32_t st0_list_int32_get(st0_list_int32* list_ptr, uint32_t pos);
-void st0_list_int32_append(st0_list_int32* list_ptr, int32_t val);
+void            st0_list_int32_destroy(st0_list_int32* list_ptr);
+void            st0_list_int32_set(st0_list_int32* list_ptr, uint32_t pos, int32_t val);
+int32_t         st0_list_int32_get(st0_list_int32* list_ptr, uint32_t pos);
+void            st0_list_int32_append(st0_list_int32* list_ptr, int32_t val);
 
 #endif
