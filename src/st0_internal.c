@@ -33,10 +33,16 @@ void st0_list_uint32_set(st0_list_uint32* list_ptr, uint32_t pos, uint32_t val) 
 
 uint32_t st0_list_uint32_get(st0_list_uint32* list_ptr, uint32_t pos) {
     if (pos >= list_ptr->size) {
-        fprintf(stderr, "Error in st0_list_uint32_get: invalid pos.");
-        fprintf(stderr, "    pos = %d, size = %d", pos, list_ptr->size);
+        fprintf(stderr, "Error in st0_list_uint32_get: invalid pos.\n");
+        fprintf(stderr, "    pos = %d, size = %d.\n", pos, list_ptr->size);
         exit(1);
     }
 
     return (list_ptr->data_ptr)[pos];
+}
+
+void st0_list_uint32_append(st0_list_uint32* list_ptr, uint32_t val) {
+    list_ptr->data_ptr = realloc(list_ptr->data_ptr, sizeof(*(list_ptr->data_ptr)) * (list_ptr->size + 1));
+    (list_ptr->data_ptr)[list_ptr->size] = val;
+    list_ptr->size++;
 }
