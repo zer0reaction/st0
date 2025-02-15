@@ -14,7 +14,7 @@ typedef struct {
 typedef void st0_list_uint32;
 #endif
 
-st0_list_uint32* st0_list_uint32_create(int size);
+st0_list_uint32* st0_list_uint32_create(uint32_t size);
 void st0_list_uint32_destroy(st0_list_uint32* list_ptr);
 
 #endif

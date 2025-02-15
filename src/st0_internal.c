@@ -1,7 +1,7 @@
 #define ST0_INTERNAL
 #include "st0.h"
 
-st0_list_uint32* st0_list_uint32_create(int size) {
+st0_list_uint32* st0_list_uint32_create(uint32_t size) {
     st0_list_uint32* list_ptr = (st0_list_uint32*)malloc(sizeof(*list_ptr));
     
     list_ptr->size = size;
