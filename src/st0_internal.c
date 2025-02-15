@@ -2,10 +2,10 @@
 #include "st0.h"
 
 st0_list_uint32* st0_list_uint32_create(uint32_t size) {
-    st0_list_uint32* list_ptr = (st0_list_uint32*)malloc(sizeof(*list_ptr));
+    st0_list_uint32* list_ptr = malloc(sizeof(*list_ptr));
     
     list_ptr->size = size;
-    list_ptr->data_ptr = (uint32_t*)malloc(sizeof(*(list_ptr->data_ptr)) * size);
+    list_ptr->data_ptr = malloc(sizeof(*(list_ptr->data_ptr)) * size);
     
     return list_ptr;
 }
