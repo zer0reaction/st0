@@ -79,7 +79,7 @@ for (i = list_ptr->size - 1; i > pos; i--) { \
 uint32_t i; \
 type value; \
 if (pos >= list_ptr->size) { \
-    fprintf(stderr, "Error in %s:\n", "st0_list_uint32_pop"); \
+    fprintf(stderr, "Error in %s:\n", function_name); \
     fprintf(stderr, "Invalid pos value: pos = %d, size = %d.\n", pos, list_ptr->size); \
     exit(1); \
 } \
