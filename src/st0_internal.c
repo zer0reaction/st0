@@ -48,6 +48,15 @@ list_ptr->data_ptr = realloc(list_ptr->data_ptr, sizeof(*(list_ptr->data_ptr)) *
 (list_ptr->data_ptr)[list_ptr->size] = val; \
 list_ptr->size++;
 
+#define ST0_MACRO_LIST_POP_BACK_IMPL(function_name) \
+if (list_ptr->size <= 0) { \
+    fprintf(stderr, "Error in %s:\n", function_name); \
+    fprintf(stderr, "Invalid size: size = %d.\n", list_ptr->size); \
+    exit(1); \
+} \
+list_ptr->size--; \
+return (list_ptr->data_ptr)[list_ptr->size];
+
 /* uint32 list */
 
 st0_list_uint32* st0_list_uint32_create(uint32_t size) {
@@ -70,6 +79,10 @@ void st0_list_uint32_push_back(st0_list_uint32* list_ptr, uint32_t val) {
     ST0_MACRO_LIST_APPEND_IMPL;
 }
 
+uint32_t st0_list_uint32_pop_back(st0_list_uint32* list_ptr) {
+    ST0_MACRO_LIST_POP_BACK_IMPL("st0_list_uint32_pop_back");
+}
+
 /* int32 list */
 
 st0_list_int32* st0_list_int32_create(uint32_t size) {
@@ -90,4 +103,8 @@ int32_t st0_list_int32_get(st0_list_int32* list_ptr, uint32_t pos) {
 
 void st0_list_int32_push_back(st0_list_int32* list_ptr, int32_t val) {
     ST0_MACRO_LIST_APPEND_IMPL;
+}
+
+int32_t st0_list_int32_pop_back(st0_list_int32* list_ptr) {
+    ST0_MACRO_LIST_POP_BACK_IMPL("st0_list_int32_pop_back");
 }
