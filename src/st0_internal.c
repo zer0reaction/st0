@@ -64,7 +64,7 @@ uint32_t st0_list_uint32_get(st0_list_uint32* list_ptr, uint32_t pos) {
     ST0_MACRO_LIST_GET;
 }
 
-void st0_list_uint32_append(st0_list_uint32* list_ptr, uint32_t val) {
+void st0_list_uint32_push_back(st0_list_uint32* list_ptr, uint32_t val) {
     ST0_MACRO_LIST_APPEND;
 }
 
@@ -86,6 +86,6 @@ int32_t st0_list_int32_get(st0_list_int32* list_ptr, uint32_t pos) {
     ST0_MACRO_LIST_GET;
 }
 
-void st0_list_int32_append(st0_list_int32* list_ptr, int32_t val) {
+void st0_list_int32_push_back(st0_list_int32* list_ptr, int32_t val) {
     ST0_MACRO_LIST_APPEND;
 }
