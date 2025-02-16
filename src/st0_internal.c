@@ -13,6 +13,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 /* Praise The Machine Spirit for this macro abomination not to break */
 
+/* exit(1) because we are based */
+
 #define ST0_MACRO_LIST_CREATE_IMPL(type, typename) \
 typename* list_ptr = malloc(sizeof(*list_ptr)); \
 int i; \
@@ -57,6 +59,19 @@ if (list_ptr->size <= 0) { \
 list_ptr->size--; \
 return (list_ptr->data_ptr)[list_ptr->size];
 
+#define ST0_MACRO_LIST_PUSH_IMPL(function_name) \
+int i; \
+if (pos > list_ptr->size) { \
+    fprintf(stderr, "Error in %s:\n", function_name); \
+    fprintf(stderr, "Invalid pos value: pos = %d, size = %d.\n", pos, list_ptr->size); \
+    exit(1); \
+} \
+list_ptr->data_ptr = realloc(list_ptr->data_ptr, sizeof(*(list_ptr->data_ptr)) * ++(list_ptr->size)); \
+for (i = list_ptr->size - 1; i > pos; i--) { \
+    (list_ptr->data_ptr)[i] = (list_ptr->data_ptr)[i - 1]; \
+} \
+(list_ptr->data_ptr)[pos] = val;
+
 /* uint32 list */
 
 st0_list_uint32* st0_list_uint32_create(uint32_t size) {
@@ -83,6 +98,10 @@ uint32_t st0_list_uint32_pop_back(st0_list_uint32* list_ptr) {
     ST0_MACRO_LIST_POP_BACK_IMPL("st0_list_uint32_pop_back");
 }
 
+void st0_list_uint32_push(st0_list_uint32* list_ptr, uint32_t pos, uint32_t val) {
+    ST0_MACRO_LIST_PUSH_IMPL("st0_list_uint32_push");
+}
+
 /* int32 list */
 
 st0_list_int32* st0_list_int32_create(uint32_t size) {
@@ -107,4 +126,8 @@ void st0_list_int32_push_back(st0_list_int32* list_ptr, int32_t val) {
 
 int32_t st0_list_int32_pop_back(st0_list_int32* list_ptr) {
     ST0_MACRO_LIST_POP_BACK_IMPL("st0_list_int32_pop_back");
+}
+
+void st0_list_int32_push(st0_list_int32* list_ptr, uint32_t pos, int32_t val) {
+    ST0_MACRO_LIST_PUSH_IMPL("st0_list_int32_push");
 }
