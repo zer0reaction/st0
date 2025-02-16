@@ -29,6 +29,7 @@ free(list_ptr);
 
 #define ST0_MACRO_LIST_SET \
 if (pos >= list_ptr->size) { \
+    fprintf(stderr, "Error in list_set:\n"); \
     fprintf(stderr, "Invalid pos value: pos = %d, size = %d.\n", pos, list_ptr->size); \
     exit(1); \
 } \
@@ -36,6 +37,7 @@ if (pos >= list_ptr->size) { \
 
 #define ST0_MACRO_LIST_GET \
 if (pos >= list_ptr->size) { \
+    fprintf(stderr, "Error in list_get:\n"); \
     fprintf(stderr, "Invalid pos value: pos = %d, size = %d.\n", pos, list_ptr->size); \
     exit(1); \
 } \
