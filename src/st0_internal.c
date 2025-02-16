@@ -27,17 +27,17 @@ return list_ptr;
 free(list_ptr->data_ptr); \
 free(list_ptr);
 
-#define ST0_MACRO_LIST_SET_IMPL \
+#define ST0_MACRO_LIST_SET_IMPL(function_name) \
 if (pos >= list_ptr->size) { \
-    fprintf(stderr, "Error in list_set:\n"); \
+    fprintf(stderr, "Error in %s:\n", function_name); \
     fprintf(stderr, "Invalid pos value: pos = %d, size = %d.\n", pos, list_ptr->size); \
     exit(1); \
 } \
 (list_ptr->data_ptr)[pos] = val;
 
-#define ST0_MACRO_LIST_GET_IMPL \
+#define ST0_MACRO_LIST_GET_IMPL(function_name) \
 if (pos >= list_ptr->size) { \
-    fprintf(stderr, "Error in list_get:\n"); \
+    fprintf(stderr, "Error in %s:\n", function_name); \
     fprintf(stderr, "Invalid pos value: pos = %d, size = %d.\n", pos, list_ptr->size); \
     exit(1); \
 } \
@@ -59,11 +59,11 @@ void st0_list_uint32_destroy(st0_list_uint32* list_ptr) {
 }
 
 void st0_list_uint32_set(st0_list_uint32* list_ptr, uint32_t pos, uint32_t val) {
-    ST0_MACRO_LIST_SET_IMPL;
+    ST0_MACRO_LIST_SET_IMPL("st0_list_uint32_set");
 }
 
 uint32_t st0_list_uint32_get(st0_list_uint32* list_ptr, uint32_t pos) {
-    ST0_MACRO_LIST_GET_IMPL;
+    ST0_MACRO_LIST_GET_IMPL("st0_list_uint32_get");
 }
 
 void st0_list_uint32_push_back(st0_list_uint32* list_ptr, uint32_t val) {
@@ -81,11 +81,11 @@ void st0_list_int32_destroy(st0_list_int32* list_ptr) {
 }
 
 void st0_list_int32_set(st0_list_int32* list_ptr, uint32_t pos, int32_t val) {
-    ST0_MACRO_LIST_SET_IMPL;
+    ST0_MACRO_LIST_SET_IMPL("st0_list_int32_set");
 }
 
 int32_t st0_list_int32_get(st0_list_int32* list_ptr, uint32_t pos) {
-    ST0_MACRO_LIST_GET_IMPL;
+    ST0_MACRO_LIST_GET_IMPL("st0_list_int32_get");
 }
 
 void st0_list_int32_push_back(st0_list_int32* list_ptr, int32_t val) {
