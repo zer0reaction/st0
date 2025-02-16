@@ -77,68 +77,84 @@ for (i = list_ptr->size - 1; i > pos; i--) { \
 
 /* uint32 list */
 
-st0_list_uint32* st0_list_uint32_create(uint32_t size) {
+st0_list_uint32* st0_list_uint32_create(uint32_t size) 
+{
     ST0_MACRO_LIST_CREATE_IMPL(uint32_t, st0_list_uint32);
 }
 
-void st0_list_uint32_destroy(st0_list_uint32* list_ptr) {
+void st0_list_uint32_destroy(st0_list_uint32* list_ptr) 
+{
     ST0_MACRO_LIST_DESTROY_IMPL;
 }
 
-uint32_t st0_list_uint32_get_size(st0_list_uint32* list_ptr) {
+uint32_t st0_list_uint32_get_size(st0_list_uint32* list_ptr) 
+{
     ST0_MACRO_LIST_GET_SIZE_IMPL;
 }
 
-void st0_list_uint32_set_value(st0_list_uint32* list_ptr, uint32_t pos, uint32_t val) {
+void st0_list_uint32_set_value(st0_list_uint32* list_ptr, uint32_t pos, uint32_t val) 
+{
     ST0_MACRO_LIST_SET_VALUE_IMPL("st0_list_uint32_set");
 }
 
-uint32_t st0_list_uint32_get_value(st0_list_uint32* list_ptr, uint32_t pos) {
+uint32_t st0_list_uint32_get_value(st0_list_uint32* list_ptr, uint32_t pos) 
+{
     ST0_MACRO_LIST_GET_VALUE_IMPL("st0_list_uint32_get");
 }
 
-void st0_list_uint32_push_back(st0_list_uint32* list_ptr, uint32_t val) {
+void st0_list_uint32_push_back(st0_list_uint32* list_ptr, uint32_t val) 
+{
     ST0_MACRO_LIST_APPEND_IMPL;
 }
 
-uint32_t st0_list_uint32_pop_back(st0_list_uint32* list_ptr) {
+uint32_t st0_list_uint32_pop_back(st0_list_uint32* list_ptr) 
+{
     ST0_MACRO_LIST_POP_BACK_IMPL("st0_list_uint32_pop_back");
 }
 
-void st0_list_uint32_push(st0_list_uint32* list_ptr, uint32_t pos, uint32_t val) {
+void st0_list_uint32_push(st0_list_uint32* list_ptr, uint32_t pos, uint32_t val) 
+{
     ST0_MACRO_LIST_PUSH_IMPL("st0_list_uint32_push");
 }
 
 /* int32 list */
 
-st0_list_int32* st0_list_int32_create(uint32_t size) {
+st0_list_int32* st0_list_int32_create(uint32_t size) 
+{
     ST0_MACRO_LIST_CREATE_IMPL(int32_t, st0_list_int32);
 }
 
-void st0_list_int32_destroy(st0_list_int32* list_ptr) {
+void st0_list_int32_destroy(st0_list_int32* list_ptr) 
+{
     ST0_MACRO_LIST_DESTROY_IMPL;
 }
 
-uint32_t st0_list_int32_get_size(st0_list_int32* list_ptr) {
+uint32_t st0_list_int32_get_size(st0_list_int32* list_ptr) 
+{
     ST0_MACRO_LIST_GET_SIZE_IMPL;
 }
 
-void st0_list_int32_set_value(st0_list_int32* list_ptr, uint32_t pos, int32_t val) {
+void st0_list_int32_set_value(st0_list_int32* list_ptr, uint32_t pos, int32_t val) 
+{
     ST0_MACRO_LIST_SET_VALUE_IMPL("st0_list_int32_set");
 }
 
-int32_t st0_list_int32_get_value(st0_list_int32* list_ptr, uint32_t pos) {
+int32_t st0_list_int32_get_value(st0_list_int32* list_ptr, uint32_t pos) 
+{
     ST0_MACRO_LIST_GET_VALUE_IMPL("st0_list_int32_get");
 }
 
-void st0_list_int32_push_back(st0_list_int32* list_ptr, int32_t val) {
+void st0_list_int32_push_back(st0_list_int32* list_ptr, int32_t val) 
+{
     ST0_MACRO_LIST_APPEND_IMPL;
 }
 
-int32_t st0_list_int32_pop_back(st0_list_int32* list_ptr) {
+int32_t st0_list_int32_pop_back(st0_list_int32* list_ptr) 
+{
     ST0_MACRO_LIST_POP_BACK_IMPL("st0_list_int32_pop_back");
 }
 
-void st0_list_int32_push(st0_list_int32* list_ptr, uint32_t pos, int32_t val) {
+void st0_list_int32_push(st0_list_int32* list_ptr, uint32_t pos, int32_t val) 
+{
     ST0_MACRO_LIST_PUSH_IMPL("st0_list_int32_push");
 }
