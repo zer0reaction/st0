@@ -27,10 +27,16 @@ typedef struct {
     uint32_t size;
 } st0_list_int32;
 
+typedef struct {
+    uint64_t* data_ptr;
+    uint32_t size;
+} st0_list_uint64;
+
 #else
 
 typedef void st0_list_uint32;
 typedef void st0_list_int32;
+typedef void st0_list_uint64;
 
 #endif
 
@@ -55,5 +61,16 @@ int32_t         st0_list_int32_get_value(st0_list_int32* list_ptr, uint32_t pos)
 void            st0_list_int32_push_back(st0_list_int32* list_ptr, int32_t val);
 int32_t         st0_list_int32_pop_back(st0_list_int32* list_ptr);
 void            st0_list_int32_push(st0_list_int32* list_ptr, uint32_t pos, int32_t val);
+
+/* uint64 list */
+
+st0_list_uint64* st0_list_uint64_create(uint32_t size);
+void             st0_list_uint64_destroy(st0_list_uint64* list_ptr);
+uint32_t         st0_list_uint64_get_size(st0_list_uint64* list_ptr);
+void             st0_list_uint64_set_value(st0_list_uint64* list_ptr, uint32_t pos, uint64_t val);
+uint64_t         st0_list_uint64_get_value(st0_list_uint64* list_ptr, uint32_t pos);
+void             st0_list_uint64_push_back(st0_list_uint64* list_ptr, uint64_t val);
+uint64_t         st0_list_uint64_pop_back(st0_list_uint64* list_ptr);
+void             st0_list_uint64_push(st0_list_uint64* list_ptr, uint32_t pos, uint64_t val);
 
 #endif
