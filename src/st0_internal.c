@@ -17,7 +17,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 #define ST0_MACRO_LIST_CREATE_IMPL(type, typename) \
 typename* list_ptr = malloc(sizeof(*list_ptr)); \
-int i; \
+uint32_t i; \
 list_ptr->size = size; \
 list_ptr->data_ptr = malloc(sizeof(*(list_ptr->data_ptr)) * size); \
 for (i = 0; i < size; i++) { \
@@ -63,7 +63,7 @@ list_ptr->size--; \
 return (list_ptr->data_ptr)[list_ptr->size];
 
 #define ST0_MACRO_LIST_PUSH_IMPL(function_name) \
-int i; \
+uint32_t i; \
 if (pos > list_ptr->size) { \
     fprintf(stderr, "Error in %s:\n", function_name); \
     fprintf(stderr, "Invalid pos value: pos = %d, size = %d.\n", pos, list_ptr->size); \
@@ -74,6 +74,21 @@ for (i = list_ptr->size - 1; i > pos; i--) { \
     (list_ptr->data_ptr)[i] = (list_ptr->data_ptr)[i - 1]; \
 } \
 (list_ptr->data_ptr)[pos] = val;
+
+#define ST0_MACRO_LIST_POP_IMPL(function_name, type) \
+uint32_t i; \
+type value; \
+if (pos >= list_ptr->size) { \
+    fprintf(stderr, "Error in %s:\n", "st0_list_uint32_pop"); \
+    fprintf(stderr, "Invalid pos value: pos = %d, size = %d.\n", pos, list_ptr->size); \
+    exit(1); \
+} \
+list_ptr->size--; \
+value = (list_ptr->data_ptr)[pos]; \
+for (i = pos; i < list_ptr->size; i++) { \
+    (list_ptr->data_ptr)[i] = (list_ptr->data_ptr)[i + 1]; \
+} \
+return value;
 
 /* uint32 list */
 
@@ -115,6 +130,11 @@ uint32_t st0_list_uint32_pop_back(st0_list_uint32* list_ptr)
 void st0_list_uint32_push(st0_list_uint32* list_ptr, uint32_t pos, uint32_t val) 
 {
     ST0_MACRO_LIST_PUSH_IMPL("st0_list_uint32_push");
+}
+
+uint32_t st0_list_uint32_pop(st0_list_uint32* list_ptr, uint32_t pos)
+{
+    ST0_MACRO_LIST_POP_IMPL("st0_list_uint32_pop", uint32_t);
 }
 
 /* int32 list */
@@ -159,6 +179,11 @@ void st0_list_int32_push(st0_list_int32* list_ptr, uint32_t pos, int32_t val)
     ST0_MACRO_LIST_PUSH_IMPL("st0_list_int32_push");
 }
 
+int32_t st0_list_int32_pop(st0_list_int32* list_ptr, uint32_t pos)
+{
+    ST0_MACRO_LIST_POP_IMPL("st0_list_int32_pop", int32_t);
+}
+
 /* uint64 list */
 
 st0_list_uint64* st0_list_uint64_create(uint32_t size)
@@ -201,6 +226,11 @@ void st0_list_uint64_push(st0_list_uint64* list_ptr, uint32_t pos, uint64_t val)
     ST0_MACRO_LIST_PUSH_IMPL("st0_list_uint64_push");
 }
 
+uint64_t st0_list_uint64_pop(st0_list_uint64* list_ptr, uint32_t pos)
+{
+    ST0_MACRO_LIST_POP_IMPL("st0_list_uint64_pop", uint64_t);
+}
+
 /* int64 list */
 
 st0_list_int64* st0_list_int64_create(uint32_t size)
@@ -241,4 +271,9 @@ int64_t st0_list_int64_pop_back(st0_list_int64* list_ptr)
 void st0_list_int64_push(st0_list_int64* list_ptr, uint32_t pos, int64_t val)
 {
     ST0_MACRO_LIST_PUSH_IMPL("st0_list_int64_push");
+}
+
+int64_t st0_list_int64_pop(st0_list_int64* list_ptr, uint32_t pos)
+{
+    ST0_MACRO_LIST_POP_IMPL("st0_list_int64_pop", int64_t);
 }

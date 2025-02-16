@@ -56,6 +56,7 @@ uint32_t         st0_list_uint32_get_value(st0_list_uint32* list_ptr, uint32_t p
 void             st0_list_uint32_push_back(st0_list_uint32* list_ptr, uint32_t val);
 uint32_t         st0_list_uint32_pop_back(st0_list_uint32* list_ptr);
 void             st0_list_uint32_push(st0_list_uint32* list_ptr, uint32_t pos, uint32_t val);
+uint32_t         st0_list_uint32_pop(st0_list_uint32* list_ptr, uint32_t pos);
 
 /* int32 list */
 
@@ -67,6 +68,7 @@ int32_t         st0_list_int32_get_value(st0_list_int32* list_ptr, uint32_t pos)
 void            st0_list_int32_push_back(st0_list_int32* list_ptr, int32_t val);
 int32_t         st0_list_int32_pop_back(st0_list_int32* list_ptr);
 void            st0_list_int32_push(st0_list_int32* list_ptr, uint32_t pos, int32_t val);
+int32_t         st0_list_int32_pop(st0_list_int32* list_ptr, uint32_t pos);
 
 /* uint64 list */
 
@@ -78,6 +80,7 @@ uint64_t         st0_list_uint64_get_value(st0_list_uint64* list_ptr, uint32_t p
 void             st0_list_uint64_push_back(st0_list_uint64* list_ptr, uint64_t val);
 uint64_t         st0_list_uint64_pop_back(st0_list_uint64* list_ptr);
 void             st0_list_uint64_push(st0_list_uint64* list_ptr, uint32_t pos, uint64_t val);
+uint64_t         st0_list_uint64_pop(st0_list_uint64* list_ptr, uint32_t pos);
 
 /* int64 list */
 
@@ -89,5 +92,6 @@ int64_t         st0_list_int64_get_value(st0_list_int64* list_ptr, uint32_t pos)
 void            st0_list_int64_push_back(st0_list_int64* list_ptr, int64_t val);
 int64_t         st0_list_int64_pop_back(st0_list_int64* list_ptr);
 void            st0_list_int64_push(st0_list_int64* list_ptr, uint32_t pos, int64_t val);
+int64_t         st0_list_int64_pop(st0_list_int64* list_ptr, uint32_t pos);
 
 #endif
