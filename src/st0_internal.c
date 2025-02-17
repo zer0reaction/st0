@@ -311,6 +311,10 @@ void st0_string_utf8_assign_to_literal(st0_string_utf8* string_ptr, const char* 
         exit(1);
     }
 
+    for (i = 0; i < string_ptr->allocated_size; i++) {
+        (string_ptr->data_ptr)[i] = 0;
+    }
+
     for (i = 0; i < literal_bytes; i++) {
         (string_ptr->data_ptr)[i] = literal_ptr[i];
     }
