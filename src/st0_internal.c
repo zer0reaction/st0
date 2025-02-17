@@ -283,8 +283,11 @@ st0_string_utf8* st0_string_utf8_create(uint32_t allocated_size)
     uint32_t i;
     st0_string_utf8* string_ptr = malloc(sizeof(*string_ptr));
 
+    string_ptr->allocated_size = allocated_size;
+    string_ptr->data_ptr = malloc(sizeof(*(string_ptr->data_ptr)) * allocated_size);
+
     for (i = 0; i < allocated_size; i++) {
-        string_ptr->data_ptr = 0;
+        (string_ptr->data_ptr)[i] = 0;
     }
 
     return string_ptr;
@@ -294,4 +297,21 @@ void st0_string_utf8_destroy(st0_string_utf8* string_ptr)
 {
     free(string_ptr->data_ptr);
     free(string_ptr);
+}
+
+void st0_string_utf8_assign_to_literal(st0_string_utf8* string_ptr, const char* literal_ptr)
+{
+    uint32_t i;
+    uint32_t literal_bytes = 0;
+    while (literal_ptr[literal_bytes++] != '\0');
+
+    if (literal_bytes > string_ptr->allocated_size) {
+        fprintf(stderr, "Error in %s:\n", "st0_string_utf8_assign_to_literal"); \
+        fprintf(stderr, "Invalid literal size (including null char): string size = %d, literal size = %d.\n", string_ptr->allocated_size, literal_bytes); \
+        exit(1);
+    }
+
+    for (i = 0; i < literal_bytes; i++) {
+        (string_ptr->data_ptr)[i] = literal_ptr[i];
+    }
 }

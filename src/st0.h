@@ -15,9 +15,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #include <stdio.h>
 #include <stdint.h>
 
-#ifdef ST0_INTERNAL
-
 typedef unsigned char char8_t;
+
+#ifdef ST0_INTERNAL
 
 typedef struct {
     uint32_t* data_ptr;
@@ -106,5 +106,6 @@ int64_t         st0_list_int64_pop(st0_list_int64* list_ptr, uint32_t pos);
 
 st0_string_utf8* st0_string_utf8_create(uint32_t allocated_size);
 void             st0_string_utf8_destroy(st0_string_utf8* string_ptr);
+void             st0_string_utf8_assign_to_literal(st0_string_utf8* string_ptr, const char* literal_ptr);
 
 #endif
