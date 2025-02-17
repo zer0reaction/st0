@@ -16,87 +16,100 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 /* exit(1) because we are based */
 
 #define ST0_MACRO_LIST_CREATE_IMPL(type, typename) \
-typename* list_ptr = malloc(sizeof(*list_ptr)); \
-uint32_t i; \
-list_ptr->size = size; \
-list_ptr->data_ptr = malloc(sizeof(*(list_ptr->data_ptr)) * size); \
-for (i = 0; i < size; i++) { \
-    (list_ptr->data_ptr)[i] = 0; \
-} \
-return list_ptr;
+    typename* list_ptr = malloc(sizeof(*list_ptr)); \
+    uint32_t i; \
+    \
+    list_ptr->size = size; \
+    list_ptr->data_ptr = malloc(sizeof(*(list_ptr->data_ptr)) * size); \
+    \
+    for (i = 0; i < size; i++) { \
+        (list_ptr->data_ptr)[i] = 0; \
+    } \
+    \
+    return list_ptr;
 
 #define ST0_MACRO_LIST_DESTROY_IMPL \
-free(list_ptr->data_ptr); \
-free(list_ptr);
+    free(list_ptr->data_ptr); \
+    free(list_ptr);
 
 #define ST0_MACRO_LIST_GET_SIZE_IMPL \
-return list_ptr->size;
+    return list_ptr->size;
 
 #define ST0_MACRO_LIST_SET_VALUE_IMPL(function_name) \
-if (pos >= list_ptr->size) { \
-    fprintf(stderr, "Error in %s:\n", function_name); \
-    fprintf(stderr, "Invalid pos value: pos = %d, size = %d.\n", pos, \
-            list_ptr->size); \
-    exit(1); \
-} \
-(list_ptr->data_ptr)[pos] = val;
+    if (pos >= list_ptr->size) { \
+        fprintf(stderr, "Error in %s:\n", function_name); \
+        fprintf(stderr, "Invalid pos value: pos = %d, size = %d.\n", pos, \
+                list_ptr->size); \
+        exit(1); \
+    } \
+    \
+    (list_ptr->data_ptr)[pos] = val;
 
 #define ST0_MACRO_LIST_GET_VALUE_IMPL(function_name) \
-if (pos >= list_ptr->size) { \
-    fprintf(stderr, "Error in %s:\n", function_name); \
-    fprintf(stderr, "Invalid pos value: pos = %d, size = %d.\n", pos, \
-            list_ptr->size); \
-    exit(1); \
-} \
-return (list_ptr->data_ptr)[pos];
+    if (pos >= list_ptr->size) { \
+        fprintf(stderr, "Error in %s:\n", function_name); \
+        fprintf(stderr, "Invalid pos value: pos = %d, size = %d.\n", pos, \
+                list_ptr->size); \
+        exit(1); \
+    } \
+    \
+    return (list_ptr->data_ptr)[pos];
 
 #define ST0_MACRO_LIST_PUSH_BACK_IMPL \
-list_ptr->data_ptr = realloc(list_ptr->data_ptr, \
-                             sizeof(*(list_ptr->data_ptr)) * \
-                             (list_ptr->size + 1)); \
-(list_ptr->data_ptr)[list_ptr->size] = val; \
-list_ptr->size++;
+    list_ptr->data_ptr = realloc(list_ptr->data_ptr, \
+                                 sizeof(*(list_ptr->data_ptr)) * \
+                                 (list_ptr->size + 1)); \
+    \
+    (list_ptr->data_ptr)[(list_ptr->size)++] = val;
 
 #define ST0_MACRO_LIST_POP_BACK_IMPL(function_name) \
-if (list_ptr->size <= 0) { \
-    fprintf(stderr, "Error in %s:\n", function_name); \
-    fprintf(stderr, "Invalid size: size = %d.\n", list_ptr->size); \
-    exit(1); \
-} \
-list_ptr->size--; \
-return (list_ptr->data_ptr)[list_ptr->size];
+    if (list_ptr->size <= 0) { \
+        fprintf(stderr, "Error in %s:\n", function_name); \
+        fprintf(stderr, "Invalid size: size = %d.\n", list_ptr->size); \
+        exit(1); \
+    } \
+    \
+    return (list_ptr->data_ptr)[--(list_ptr->size)];
 
 #define ST0_MACRO_LIST_PUSH_IMPL(function_name) \
-uint32_t i; \
-if (pos > list_ptr->size) { \
-    fprintf(stderr, "Error in %s:\n", function_name); \
-    fprintf(stderr, "Invalid pos value: pos = %d, size = %d.\n", pos, \
-            list_ptr->size); \
-    exit(1); \
-} \
-list_ptr->data_ptr = realloc(list_ptr->data_ptr, \
-                             sizeof(*(list_ptr->data_ptr)) * \
-                             ++(list_ptr->size)); \
-for (i = list_ptr->size - 1; i > pos; i--) { \
-    (list_ptr->data_ptr)[i] = (list_ptr->data_ptr)[i - 1]; \
-} \
-(list_ptr->data_ptr)[pos] = val;
+    uint32_t i; \
+    \
+    if (pos > list_ptr->size) { \
+        fprintf(stderr, "Error in %s:\n", function_name); \
+        fprintf(stderr, "Invalid pos value: pos = %d, size = %d.\n", pos, \
+                list_ptr->size); \
+        exit(1); \
+    } \
+    \
+    list_ptr->data_ptr = realloc(list_ptr->data_ptr, \
+                                 sizeof(*(list_ptr->data_ptr)) * \
+                                 ++(list_ptr->size)); \
+    \
+    for (i = list_ptr->size - 1; i > pos; i--) { \
+        (list_ptr->data_ptr)[i] = (list_ptr->data_ptr)[i - 1]; \
+    } \
+    \
+    (list_ptr->data_ptr)[pos] = val;
 
 #define ST0_MACRO_LIST_POP_IMPL(function_name, type) \
-uint32_t i; \
-type value; \
-if (pos >= list_ptr->size) { \
-    fprintf(stderr, "Error in %s:\n", function_name); \
-    fprintf(stderr, "Invalid pos value: pos = %d, size = %d.\n", pos, \
-            list_ptr->size); \
-    exit(1); \
-} \
-list_ptr->size--; \
-value = (list_ptr->data_ptr)[pos]; \
-for (i = pos; i < list_ptr->size; i++) { \
-    (list_ptr->data_ptr)[i] = (list_ptr->data_ptr)[i + 1]; \
-} \
-return value;
+    uint32_t i; \
+    type value; \
+    \
+    if (pos >= list_ptr->size) { \
+        fprintf(stderr, "Error in %s:\n", function_name); \
+        fprintf(stderr, "Invalid pos value: pos = %d, size = %d.\n", pos, \
+                list_ptr->size); \
+        exit(1); \
+    } \
+    \
+    list_ptr->size--; \
+    value = (list_ptr->data_ptr)[pos]; \
+    \
+    for (i = pos; i < list_ptr->size; i++) { \
+        (list_ptr->data_ptr)[i] = (list_ptr->data_ptr)[i + 1]; \
+    } \
+    \
+    return value;
 
 /* uint32 list */
 
