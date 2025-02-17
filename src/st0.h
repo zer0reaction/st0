@@ -17,6 +17,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 #ifdef ST0_INTERNAL
 
+typedef unsigned char char8_t;
+
 typedef struct {
     uint32_t* data_ptr;
     uint32_t size;
@@ -37,12 +39,18 @@ typedef struct {
     uint32_t size;
 } st0_list_int64;
 
+typedef struct {
+    char8_t* data_ptr;
+    uint32_t allocated_size; /* that means we include null char here */
+} st0_string_utf8;
+
 #else
 
 typedef void st0_list_uint32;
 typedef void st0_list_int32;
 typedef void st0_list_uint64;
 typedef void st0_list_int64;
+typedef void st0_string_utf8;
 
 #endif
 
@@ -93,5 +101,10 @@ void            st0_list_int64_push_back(st0_list_int64* list_ptr, int64_t val);
 int64_t         st0_list_int64_pop_back(st0_list_int64* list_ptr);
 void            st0_list_int64_push(st0_list_int64* list_ptr, uint32_t pos, int64_t val);
 int64_t         st0_list_int64_pop(st0_list_int64* list_ptr, uint32_t pos);
+
+/* utf8 string */
+
+st0_string_utf8* st0_string_utf8_create(uint32_t allocated_size);
+void             st0_string_utf8_destroy(st0_string_utf8* string_ptr);
 
 #endif

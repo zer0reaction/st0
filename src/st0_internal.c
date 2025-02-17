@@ -277,3 +277,21 @@ int64_t st0_list_int64_pop(st0_list_int64* list_ptr, uint32_t pos)
 {
     ST0_MACRO_LIST_POP_IMPL("st0_list_int64_pop", int64_t);
 }
+
+st0_string_utf8* st0_string_utf8_create(uint32_t allocated_size)
+{
+    uint32_t i;
+    st0_string_utf8* string_ptr = malloc(sizeof(*string_ptr));
+
+    for (i = 0; i < allocated_size; i++) {
+        string_ptr->data_ptr = 0;
+    }
+
+    return string_ptr;
+}
+
+void st0_string_utf8_destroy(st0_string_utf8* string_ptr)
+{
+    free(string_ptr->data_ptr);
+    free(string_ptr);
+}
