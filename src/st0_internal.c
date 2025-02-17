@@ -35,7 +35,8 @@ return list_ptr->size;
 #define ST0_MACRO_LIST_SET_VALUE_IMPL(function_name) \
 if (pos >= list_ptr->size) { \
     fprintf(stderr, "Error in %s:\n", function_name); \
-    fprintf(stderr, "Invalid pos value: pos = %d, size = %d.\n", pos, list_ptr->size); \
+    fprintf(stderr, "Invalid pos value: pos = %d, size = %d.\n", pos, \
+            list_ptr->size); \
     exit(1); \
 } \
 (list_ptr->data_ptr)[pos] = val;
@@ -43,13 +44,16 @@ if (pos >= list_ptr->size) { \
 #define ST0_MACRO_LIST_GET_VALUE_IMPL(function_name) \
 if (pos >= list_ptr->size) { \
     fprintf(stderr, "Error in %s:\n", function_name); \
-    fprintf(stderr, "Invalid pos value: pos = %d, size = %d.\n", pos, list_ptr->size); \
+    fprintf(stderr, "Invalid pos value: pos = %d, size = %d.\n", pos, \
+            list_ptr->size); \
     exit(1); \
 } \
 return (list_ptr->data_ptr)[pos];
 
 #define ST0_MACRO_LIST_PUSH_BACK_IMPL \
-list_ptr->data_ptr = realloc(list_ptr->data_ptr, sizeof(*(list_ptr->data_ptr)) * (list_ptr->size + 1)); \
+list_ptr->data_ptr = realloc(list_ptr->data_ptr, \
+                             sizeof(*(list_ptr->data_ptr)) * \
+                             (list_ptr->size + 1)); \
 (list_ptr->data_ptr)[list_ptr->size] = val; \
 list_ptr->size++;
 
@@ -66,10 +70,13 @@ return (list_ptr->data_ptr)[list_ptr->size];
 uint32_t i; \
 if (pos > list_ptr->size) { \
     fprintf(stderr, "Error in %s:\n", function_name); \
-    fprintf(stderr, "Invalid pos value: pos = %d, size = %d.\n", pos, list_ptr->size); \
+    fprintf(stderr, "Invalid pos value: pos = %d, size = %d.\n", pos, \
+            list_ptr->size); \
     exit(1); \
 } \
-list_ptr->data_ptr = realloc(list_ptr->data_ptr, sizeof(*(list_ptr->data_ptr)) * ++(list_ptr->size)); \
+list_ptr->data_ptr = realloc(list_ptr->data_ptr, \
+                             sizeof(*(list_ptr->data_ptr)) * \
+                             ++(list_ptr->size)); \
 for (i = list_ptr->size - 1; i > pos; i--) { \
     (list_ptr->data_ptr)[i] = (list_ptr->data_ptr)[i - 1]; \
 } \
@@ -80,7 +87,8 @@ uint32_t i; \
 type value; \
 if (pos >= list_ptr->size) { \
     fprintf(stderr, "Error in %s:\n", function_name); \
-    fprintf(stderr, "Invalid pos value: pos = %d, size = %d.\n", pos, list_ptr->size); \
+    fprintf(stderr, "Invalid pos value: pos = %d, size = %d.\n", pos, \
+            list_ptr->size); \
     exit(1); \
 } \
 list_ptr->size--; \
@@ -107,7 +115,8 @@ uint32_t st0_list_uint32_get_size(st0_list_uint32* list_ptr)
     ST0_MACRO_LIST_GET_SIZE_IMPL;
 }
 
-void st0_list_uint32_set_value(st0_list_uint32* list_ptr, uint32_t pos, uint32_t val)
+void st0_list_uint32_set_value(st0_list_uint32* list_ptr, uint32_t pos,
+                               uint32_t val)
 {
     ST0_MACRO_LIST_SET_VALUE_IMPL("st0_list_uint32_set_value");
 }
@@ -154,7 +163,8 @@ uint32_t st0_list_int32_get_size(st0_list_int32* list_ptr)
     ST0_MACRO_LIST_GET_SIZE_IMPL;
 }
 
-void st0_list_int32_set_value(st0_list_int32* list_ptr, uint32_t pos, int32_t val)
+void st0_list_int32_set_value(st0_list_int32* list_ptr, uint32_t pos,
+                              int32_t val)
 {
     ST0_MACRO_LIST_SET_VALUE_IMPL("st0_list_int32_set_value");
 }
@@ -201,7 +211,8 @@ uint32_t st0_list_uint64_get_size(st0_list_uint64* list_ptr)
     ST0_MACRO_LIST_GET_SIZE_IMPL;
 }
 
-void st0_list_uint64_set_value(st0_list_uint64* list_ptr, uint32_t pos, uint64_t val)
+void st0_list_uint64_set_value(st0_list_uint64* list_ptr, uint32_t pos,
+                               uint64_t val)
 {
     ST0_MACRO_LIST_SET_VALUE_IMPL("st0_list_uint64_set_value");
 }
@@ -248,7 +259,8 @@ uint32_t st0_list_int64_get_size(st0_list_int64* list_ptr)
     ST0_MACRO_LIST_GET_SIZE_IMPL;
 }
 
-void st0_list_int64_set_value(st0_list_int64* list_ptr, uint32_t pos, int64_t val)
+void st0_list_int64_set_value(st0_list_int64* list_ptr, uint32_t pos,
+                              int64_t val)
 {
     ST0_MACRO_LIST_SET_VALUE_IMPL("st0_list_int64_set_value");
 }
@@ -284,7 +296,8 @@ st0_string_utf8* st0_string_utf8_create(uint32_t allocated_size)
     st0_string_utf8* string_ptr = malloc(sizeof(*string_ptr));
 
     string_ptr->allocated_size = allocated_size;
-    string_ptr->data_ptr = malloc(sizeof(*(string_ptr->data_ptr)) * allocated_size);
+    string_ptr->data_ptr = malloc(sizeof(*(string_ptr->data_ptr)) *
+                                  allocated_size);
 
     for (i = 0; i < allocated_size; i++) {
         (string_ptr->data_ptr)[i] = 0;
@@ -299,7 +312,8 @@ void st0_string_utf8_destroy(st0_string_utf8* string_ptr)
     free(string_ptr);
 }
 
-void st0_string_utf8_assign_to_literal(st0_string_utf8* string_ptr, const char* literal_ptr)
+void st0_string_utf8_assign_to_literal(st0_string_utf8* string_ptr,
+                                       const char* literal_ptr)
 {
     uint32_t i;
     uint32_t literal_bytes = 0;
@@ -307,7 +321,9 @@ void st0_string_utf8_assign_to_literal(st0_string_utf8* string_ptr, const char* 
 
     if (literal_bytes > string_ptr->allocated_size) {
         fprintf(stderr, "Error in %s:\n", "st0_string_utf8_assign_to_literal");
-        fprintf(stderr, "Invalid literal size (including null char): string size = %d, literal size = %d.\n", string_ptr->allocated_size, literal_bytes);
+        fprintf(stderr, "Invalid literal size (including null char): string \
+                         size = %d, literal size = %d.\n",
+                         string_ptr->allocated_size, literal_bytes);
         exit(1);
     }
 
