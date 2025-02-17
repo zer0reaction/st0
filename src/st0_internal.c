@@ -306,8 +306,8 @@ void st0_string_utf8_assign_to_literal(st0_string_utf8* string_ptr, const char* 
     while (literal_ptr[literal_bytes++] != '\0');
 
     if (literal_bytes > string_ptr->allocated_size) {
-        fprintf(stderr, "Error in %s:\n", "st0_string_utf8_assign_to_literal"); \
-        fprintf(stderr, "Invalid literal size (including null char): string size = %d, literal size = %d.\n", string_ptr->allocated_size, literal_bytes); \
+        fprintf(stderr, "Error in %s:\n", "st0_string_utf8_assign_to_literal");
+        fprintf(stderr, "Invalid literal size (including null char): string size = %d, literal size = %d.\n", string_ptr->allocated_size, literal_bytes);
         exit(1);
     }
 
