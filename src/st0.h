@@ -41,7 +41,8 @@ typedef struct {
 
 typedef struct {
     char8_t* data_ptr;
-    uint32_t allocated_size; /* that means we include null char here */
+    uint32_t allocated_bytes; /* that means we include null char here */
+    uint32_t used_bytes;      /* and also here */
 } st0_string_utf8;
 
 #else
@@ -104,8 +105,10 @@ int64_t         st0_list_int64_pop(st0_list_int64* list_ptr, uint32_t pos);
 
 /* utf8 string */
 
-st0_string_utf8* st0_string_utf8_create(uint32_t allocated_size);
+st0_string_utf8* st0_string_utf8_create(uint32_t allocated_bytes);
 void             st0_string_utf8_destroy(st0_string_utf8* string_ptr);
 void             st0_string_utf8_assign_to_literal(st0_string_utf8* string_ptr, const char* literal_ptr);
+uint32_t         st0_string_utf8_get_allocated_bytes(st0_string_utf8* string_ptr);
+uint32_t         st0_string_utf8_get_used_bytes(st0_string_utf8* string_ptr);
 
 #endif

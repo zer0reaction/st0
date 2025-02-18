@@ -303,16 +303,17 @@ int64_t st0_list_int64_pop(st0_list_int64* list_ptr, uint32_t pos)
     ST0_MACRO_LIST_POP_IMPL("st0_list_int64_pop", int64_t);
 }
 
-st0_string_utf8* st0_string_utf8_create(uint32_t allocated_size)
+st0_string_utf8* st0_string_utf8_create(uint32_t allocated_bytes)
 {
     uint32_t i;
     st0_string_utf8* string_ptr = malloc(sizeof(*string_ptr));
 
-    string_ptr->allocated_size = allocated_size;
+    string_ptr->allocated_bytes = allocated_bytes;
     string_ptr->data_ptr = malloc(sizeof(*(string_ptr->data_ptr)) *
-                                  allocated_size);
+                                  allocated_bytes);
+    string_ptr->used_bytes = 0;
 
-    for (i = 0; i < allocated_size; i++) {
+    for (i = 0; i < allocated_bytes; i++) {
         (string_ptr->data_ptr)[i] = 0;
     }
 
@@ -332,19 +333,31 @@ void st0_string_utf8_assign_to_literal(st0_string_utf8* string_ptr,
     uint32_t literal_bytes = 0;
     while (literal_ptr[literal_bytes++] != '\0');
 
-    if (literal_bytes > string_ptr->allocated_size) {
+    if (literal_bytes > string_ptr->allocated_bytes) {
         fprintf(stderr, "Error in %s:\n", "st0_string_utf8_assign_to_literal");
         fprintf(stderr, "Invalid literal size (including null char): string \
                          size = %d, literal size = %d.\n",
-                         string_ptr->allocated_size, literal_bytes);
+                         string_ptr->allocated_bytes, literal_bytes);
         exit(1);
     }
 
-    for (i = 0; i < string_ptr->allocated_size; i++) {
+    for (i = 0; i < string_ptr->allocated_bytes; i++) {
         (string_ptr->data_ptr)[i] = 0;
     }
 
     for (i = 0; i < literal_bytes; i++) {
         (string_ptr->data_ptr)[i] = literal_ptr[i];
     }
+
+    string_ptr->used_bytes = literal_bytes;
+}
+
+uint32_t st0_string_utf8_get_allocated_bytes(st0_string_utf8* string_ptr)
+{
+    return string_ptr->allocated_bytes;
+}
+
+uint32_t st0_string_utf8_get_used_bytes(st0_string_utf8* string_ptr)
+{
+    return string_ptr->used_bytes;
 }
