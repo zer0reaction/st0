@@ -46,7 +46,7 @@ uint32_t st0_list_get_size(st0_list* list_ptr) {
 
 void st0_list_set_value(st0_list* list_ptr, uint32_t pos, void* value_ptr) {
     #ifdef ST0_DEBUG
-    assert(ST0_TYPES_COUNT == 6);
+    assert(ST0_TYPES_COUNT == 7);
     #endif
 
     #define IMPL(type_name) \
@@ -71,7 +71,7 @@ void st0_list_set_value(st0_list* list_ptr, uint32_t pos, void* value_ptr) {
 
 void st0_list_get_value(st0_list* list_ptr, void* buffer_ptr, uint32_t pos) {
     #ifdef ST0_DEBUG
-    assert(ST0_TYPES_COUNT == 6);
+    assert(ST0_TYPES_COUNT == 7);
     #endif
 
     #define IMPL(type_name) \
@@ -96,7 +96,7 @@ void st0_list_get_value(st0_list* list_ptr, void* buffer_ptr, uint32_t pos) {
 
 void st0_list_push_back(st0_list* list_ptr, void* value_ptr) {
     #ifdef ST0_DEBUG
-    assert(ST0_TYPES_COUNT == 6);
+    assert(ST0_TYPES_COUNT == 7);
     #endif
 
     #define IMPL(type_name) \
@@ -124,7 +124,7 @@ void st0_list_push_back(st0_list* list_ptr, void* value_ptr) {
 
 void st0_list_pop_back(st0_list* list_ptr, void* buffer_ptr) {
     #ifdef ST0_DEBUG
-    assert(ST0_TYPES_COUNT == 6);
+    assert(ST0_TYPES_COUNT == 7);
     #endif
 
     #define IMPL(type_name) \
@@ -154,7 +154,7 @@ void st0_list_pop_back(st0_list* list_ptr, void* buffer_ptr) {
 
 void st0_list_push(st0_list* list_ptr, uint32_t pos, void* value_ptr) {
     #ifdef ST0_DEBUG
-    assert(ST0_TYPES_COUNT == 6);
+    assert(ST0_TYPES_COUNT == 7);
     #endif
 
     #define IMPL(type_name) \
@@ -189,7 +189,7 @@ void st0_list_push(st0_list* list_ptr, uint32_t pos, void* value_ptr) {
 
 void st0_list_pop(st0_list* list_ptr, void* buffer_ptr, uint32_t pos) {
     #ifdef ST0_DEBUG
-    assert(ST0_TYPES_COUNT == 6);
+    assert(ST0_TYPES_COUNT == 7);
     #endif
 
     #define IMPL(type_name) \
@@ -256,15 +256,53 @@ void st0_string_destroy(st0_string* string_ptr) {
     free(string_ptr);
 }
 
-st0_string* st0_string_utf8_create(uint32_t size) {
+uint32_t st0_string_get_allocated_bytes(st0_string* string_ptr) {
+    return string_ptr->allocated_bytes;
+}
+
+uint32_t st0_string_get_used_bytes(st0_string* string_ptr) {
+    return string_ptr->used_bytes;
+}
+
+void st0_string_assign_to_literal(st0_string* string_ptr, 
+                                  const char* literal_ptr) {
+    #ifdef ST0_DEBUG
+    assert(ST0_TYPES_COUNT == 7);
+    #endif
+
+    if (string_ptr->type == ST0_TYPE_STRING_UTF8) {
+        uint32_t i = 0;
+        uint32_t j;
+
+        for (j = 0; j < string_ptr->allocated_bytes; j++) {
+            ((char8_t*)(string_ptr->data_ptr))[i] = 0;
+        }
+
+        while (literal_ptr[i] != '\0') {
+            ((char8_t*)(string_ptr->data_ptr))[i] = literal_ptr[i];
+            i++;
+        }
+
+        string_ptr->used_bytes = i + 1;
+    }
+}
+
+void st0_string_get_char(st0_string* string_ptr, void* buffer, uint32_t pos) {
+    if (string_ptr->type == ST0_TYPE_STRING_UTF8) {
+        *((char8_t*)buffer) = ((char8_t*)(string_ptr->data_ptr))[pos];
+    }
+}
+
+st0_string* st0_string_utf8_create(uint32_t allocated_bytes) {
     uint32_t i;
     st0_string* string_ptr = malloc(sizeof(st0_string));
 
     string_ptr->type = ST0_TYPE_STRING_UTF8;
-    string_ptr->data_ptr = malloc(sizeof(char8_t) * size);
-    string_ptr->size = size;
+    string_ptr->data_ptr = malloc(sizeof(char8_t) * allocated_bytes);
+    string_ptr->allocated_bytes = allocated_bytes;
+    string_ptr->used_bytes = 0;
 
-    for (i = 0; i < size; i++) {
+    for (i = 0; i < allocated_bytes; i++) {
         ((char8_t*)(string_ptr->data_ptr))[i] = 0;
     }
 

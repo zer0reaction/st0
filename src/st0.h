@@ -40,7 +40,8 @@ typedef struct {
 typedef struct {
     st0_type type;
     void* data_ptr;
-    uint32_t size;
+    uint32_t allocated_bytes;
+    uint32_t used_bytes;
 } st0_string;
 
 #else
@@ -70,9 +71,13 @@ st0_list* st0_list_float64_create(uint32_t size);
 /* end of list functions */
 
 /* string functions */
-void st0_string_destroy(st0_string* string_ptr);
+void     st0_string_destroy(st0_string* string_ptr);
+uint32_t st0_string_get_allocated_bytes(st0_string* string_ptr);
+uint32_t st0_string_get_used_bytes(st0_string* string_ptr);
+void     st0_string_assign_to_literal(st0_string* string_ptr, const char* literal_ptr);
+void     st0_string_get_char(st0_string* string_ptr, void* buffer, uint32_t pos);
 
-st0_string* st0_string_utf8_create(uint32_t size);
+st0_string* st0_string_utf8_create(uint32_t allocated_bytes);
 /* end of string functions */
 
 #endif
