@@ -19,103 +19,114 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #include <assert.h>
 #endif
 
-void st0_list_destroy(st0_list* list) {
-    free(list->data_ptr);
-    free(list);
+void st0_list_destroy(st0_list* list_ptr) {
+    free((list_ptr->data_ptr));
+    free(list_ptr);
 }
 
-uint32_t st0_list_get_size(st0_list* list) {
-    return list->size;
+uint32_t st0_list_get_size(st0_list* list_ptr) {
+    return list_ptr->size;
 }
 
-void st0_list_set_value(st0_list* list, uint32_t pos, void* value_ptr) {
+void st0_list_set_value(st0_list* list_ptr, uint32_t pos, void* value_ptr) {
     #ifdef ST0_DEBUG
     assert(ST0_TYPES_COUNT == 1);
     #endif
 
-    if (list->type == ST0_TYPE_LIST_UINT32) {
-        ((uint32_t*)(list->data_ptr))[pos] = *((uint32_t*)value_ptr);
+    if (list_ptr->type == ST0_TYPE_LIST_UINT32) {
+        ((uint32_t*)(list_ptr->data_ptr))[pos] = *((uint32_t*)value_ptr);
     }
 }
 
-void st0_list_get_value(st0_list* list, void* buffer_ptr, uint32_t pos) {
+void st0_list_get_value(st0_list* list_ptr, void* buffer_ptr, uint32_t pos) {
     #ifdef ST0_DEBUG
     assert(ST0_TYPES_COUNT == 1);
     #endif
 
-    if (list->type == ST0_TYPE_LIST_UINT32) {
-        *((uint32_t*)buffer_ptr) = ((uint32_t*)list->data_ptr)[pos];
+    if (list_ptr->type == ST0_TYPE_LIST_UINT32) {
+        *((uint32_t*)buffer_ptr) = ((uint32_t*)(list_ptr->data_ptr))[pos];
     }
 }
 
-void st0_list_push_back(st0_list* list, void* value_ptr) {
+void st0_list_push_back(st0_list* list_ptr, void* value_ptr) {
     #ifdef ST0_DEBUG
     assert(ST0_TYPES_COUNT == 1);
     #endif
 
-    if (list->type == ST0_TYPE_LIST_UINT32) {
-        list->data_ptr = realloc(list->data_ptr, 
-                                 sizeof(uint32_t) * ++(list->size));
-        ((uint32_t*)list->data_ptr)[list->size - 1] = *((uint32_t*)value_ptr);
+    if (list_ptr->type == ST0_TYPE_LIST_UINT32) {
+        list_ptr->data_ptr = realloc(list_ptr->data_ptr,
+                                     sizeof(uint32_t) * ++(list_ptr->size));
+        ((uint32_t*)(list_ptr->data_ptr))[list_ptr->size - 1] =
+            *((uint32_t*)value_ptr);
     }
 }
 
-void st0_list_pop_back(st0_list* list, void* buffer_ptr) {
+void st0_list_pop_back(st0_list* list_ptr, void* buffer_ptr) {
     #ifdef ST0_DEBUG
     assert(ST0_TYPES_COUNT == 1);
     #endif
 
-    if (list->type == ST0_TYPE_LIST_UINT32) {
-        *((uint32_t*)buffer_ptr) = ((uint32_t*)list->data_ptr)[--(list->size)];
+    if (list_ptr->type == ST0_TYPE_LIST_UINT32) {
+        if (buffer_ptr != NULL) {
+            *((uint32_t*)buffer_ptr) =
+                ((uint32_t*)(list_ptr->data_ptr))[--(list_ptr->size)];
+        } else {
+            list_ptr->size--;
+        }
     }
 }
 
-void st0_list_push(st0_list* list, uint32_t pos, void* value_ptr) {
+void st0_list_push(st0_list* list_ptr, uint32_t pos, void* value_ptr) {
     #ifdef ST0_DEBUG
     assert(ST0_TYPES_COUNT == 1);
     #endif
 
-    if (list->type == ST0_TYPE_LIST_UINT32) {
+    if (list_ptr->type == ST0_TYPE_LIST_UINT32) {
         uint32_t i;
 
-        list->data_ptr = realloc(list->data_ptr, 
-                                 sizeof(uint32_t) * ++(list->size));
+        list_ptr->data_ptr = realloc(list_ptr->data_ptr,
+                                     sizeof(uint32_t) * ++(list_ptr->size));
 
-        for (i = list->size - 1; i > pos; i--) {
-            ((uint32_t*)list->data_ptr)[i] = ((uint32_t*)list->data_ptr)[i - 1];
+        for (i = list_ptr->size - 1; i > pos; i--) {
+            ((uint32_t*)(list_ptr->data_ptr))[i] =
+                ((uint32_t*)(list_ptr->data_ptr))[i - 1];
         }
 
-        ((uint32_t*)list->data_ptr)[pos] = *((uint32_t*)value_ptr);
+        ((uint32_t*)(list_ptr->data_ptr))[pos] = *((uint32_t*)value_ptr);
     }
 }
 
-void st0_list_pop(st0_list* list, void* buffer_ptr, uint32_t pos) {
+void st0_list_pop(st0_list* list_ptr, void* buffer_ptr, uint32_t pos) {
     #ifdef ST0_DEBUG
     assert(ST0_TYPES_COUNT == 1);
     #endif
 
-    if (list->type == ST0_TYPE_LIST_UINT32) {
+    if (list_ptr->type == ST0_TYPE_LIST_UINT32) {
         uint32_t i;
-        *((uint32_t*)buffer_ptr) = ((uint32_t*)list->data_ptr)[pos];
 
-        list->size--;
-        for (i = pos; i < list->size; i++) {
-            ((uint32_t*)list->data_ptr)[i] = ((uint32_t*)list->data_ptr)[i + 1];
+        if (buffer_ptr != NULL) {
+            *((uint32_t*)buffer_ptr) = ((uint32_t*)(list_ptr->data_ptr))[pos];
+        }
+
+        list_ptr->size--;
+        for (i = pos; i < list_ptr->size; i++) {
+            ((uint32_t*)(list_ptr->data_ptr))[i] =
+                ((uint32_t*)(list_ptr->data_ptr))[i + 1];
         }
     }
 }
 
 st0_list* st0_list_uint32_create(uint32_t size) {
     uint32_t i;
-    st0_list* list = malloc(sizeof(st0_list));
+    st0_list* list_ptr = malloc(sizeof(st0_list));
 
-    list->type = ST0_TYPE_LIST_UINT32;
-    list->size = size;
-    list->data_ptr = malloc(sizeof(uint32_t) * size);
+    list_ptr->type = ST0_TYPE_LIST_UINT32;
+    list_ptr->size = size;
+    list_ptr->data_ptr = malloc(sizeof(uint32_t) * size);
 
-    for (i = 0; i < list->size; i++) {
-        ((uint32_t*)list->data_ptr)[i] = 0;
+    for (i = 0; i < list_ptr->size; i++) {
+        ((uint32_t*)(list_ptr->data_ptr))[i] = 0;
     }
 
-    return list;
+    return list_ptr;
 }
