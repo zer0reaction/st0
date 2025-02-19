@@ -13,6 +13,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 #include <stdint.h>
 
+/* type declaration */
 #ifdef ST0_INTERNAL
 
 typedef unsigned char char8_t;
@@ -40,6 +41,7 @@ typedef struct {
 typedef void st0_list;
 
 #endif
+/* end of type declaration */
 
 void     st0_list_destroy(st0_list* list_ptr);
 uint32_t st0_list_get_size(st0_list* list_ptr);
