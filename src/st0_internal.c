@@ -31,6 +31,16 @@ void st0_list_set_value(st0_list* list, uint32_t pos, void* value_ptr) {
     }
 }
 
+void st0_list_get_value(st0_list* list, uint32_t pos, void* buffer) {
+    #ifdef ST0_DEBUG
+    assert(ST0_TYPES_COUNT == 1);
+    #endif
+
+    if (list->type == ST0_TYPE_LIST_UINT32) {
+        *((uint32_t*)buffer) = ((uint32_t*)list->data_ptr)[pos];
+    }
+}
+
 st0_list* st0_list_uint32_create(uint32_t size) {
     st0_list* list = malloc(sizeof(st0_list));
 
