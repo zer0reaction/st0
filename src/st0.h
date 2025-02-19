@@ -34,9 +34,10 @@ typedef void st0_list;
 
 #endif
 
-void st0_list_destroy(st0_list* list);
-void st0_list_set_value(st0_list* list, uint32_t pos, void* value_ptr);
-void st0_list_get_value(st0_list* list, uint32_t pos, void* buffer);
+void     st0_list_destroy(st0_list* list);
+uint32_t st0_list_get_size(st0_list* list);
+void     st0_list_set_value(st0_list* list, uint32_t pos, void* value_ptr);
+void     st0_list_get_value(st0_list* list, uint32_t pos, void* buffer);
 
 st0_list* st0_list_uint32_create(uint32_t size);
 

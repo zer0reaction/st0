@@ -21,6 +21,10 @@ void st0_list_destroy(st0_list* list) {
     free(list);
 }
 
+uint32_t st0_list_get_size(st0_list* list) {
+    return list->size;
+}
+
 void st0_list_set_value(st0_list* list, uint32_t pos, void* value_ptr) {
     #ifdef ST0_DEBUG
     assert(ST0_TYPES_COUNT == 1);
