@@ -35,13 +35,13 @@ void st0_list_set_value(st0_list* list, uint32_t pos, void* value_ptr) {
     }
 }
 
-void st0_list_get_value(st0_list* list, uint32_t pos, void* buffer) {
+void st0_list_get_value(st0_list* list, uint32_t pos, void* buffer_ptr) {
     #ifdef ST0_DEBUG
     assert(ST0_TYPES_COUNT == 1);
     #endif
 
     if (list->type == ST0_TYPE_LIST_UINT32) {
-        *((uint32_t*)buffer) = ((uint32_t*)list->data_ptr)[pos];
+        *((uint32_t*)buffer_ptr) = ((uint32_t*)list->data_ptr)[pos];
     }
 }
 
@@ -54,6 +54,16 @@ void st0_list_push_back(st0_list* list, void* value_ptr) {
         list->data_ptr = realloc(list->data_ptr, sizeof(uint32_t) * 
                                  ++(list->size));
         ((uint32_t*)list->data_ptr)[list->size - 1] = *((uint32_t*)value_ptr);
+    }
+}
+
+void st0_list_pop_back(st0_list* list, void* buffer_ptr) {
+    #ifdef ST0_DEBUG
+    assert(ST0_TYPES_COUNT == 1);
+    #endif
+
+    if (list->type == ST0_TYPE_LIST_UINT32) {
+        *((uint32_t*)buffer_ptr) = ((uint32_t*)list->data_ptr)[--(list->size)];
     }
 }
 
