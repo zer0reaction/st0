@@ -16,9 +16,16 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #ifdef ST0_INTERNAL
 
 typedef unsigned char char8_t;
+typedef float float32_t;
+typedef double float64_t;
 
 typedef enum {
     ST0_TYPE_LIST_UINT32,
+    ST0_TYPE_LIST_INT32,
+    ST0_TYPE_LIST_UINT64,
+    ST0_TYPE_LIST_INT64,
+    ST0_TYPE_LIST_FLOAT32,
+    ST0_TYPE_LIST_FLOAT64,
     ST0_TYPES_COUNT
 } st0_type;
 
@@ -44,5 +51,10 @@ void     st0_list_push(st0_list* list_ptr, uint32_t pos, void* value_ptr);
 void     st0_list_pop(st0_list* list_ptr, void* buffer_ptr, uint32_t pos);
 
 st0_list* st0_list_uint32_create(uint32_t size);
+st0_list* st0_list_int32_create(uint32_t size);
+st0_list* st0_list_uint64_create(uint32_t size);
+st0_list* st0_list_int64_create(uint32_t size);
+st0_list* st0_list_float32_create(uint32_t size);
+st0_list* st0_list_float64_create(uint32_t size);
 
 #endif
