@@ -19,6 +19,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #include <assert.h>
 #endif
 
+/* list functions */
+
 #define ST0_MACRO_LIST_CREATE(type_name, type_enum) \
     uint32_t i; \
     st0_list* list_ptr = malloc(sizeof(st0_list)); \
@@ -27,7 +29,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     list_ptr->size = size; \
     list_ptr->data_ptr = malloc(sizeof(type_name) * size); \
     \
-    for (i = 0; i < list_ptr->size; i++) { \
+    for (i = 0; i < size; i++) { \
         ((type_name*)(list_ptr->data_ptr))[i] = 0; \
     } \
     \
@@ -194,7 +196,8 @@ void st0_list_pop(st0_list* list_ptr, void* buffer_ptr, uint32_t pos) {
         uint32_t i; \
         \
         if (buffer_ptr != NULL) { \
-            *((type_name*)buffer_ptr) = ((type_name*)(list_ptr->data_ptr))[pos]; \
+            *((type_name*)buffer_ptr) = \
+                ((type_name*)(list_ptr->data_ptr))[pos]; \
         } \
         \
         list_ptr->size--; \
@@ -243,3 +246,29 @@ st0_list* st0_list_float32_create(uint32_t size) {
 st0_list* st0_list_float64_create(uint32_t size) {
     ST0_MACRO_LIST_CREATE(float64_t, ST0_TYPE_LIST_FLOAT64);
 }
+
+/* end of list functions */
+
+/* string functions */
+
+void st0_string_destroy(st0_string* string_ptr) {
+    free(string_ptr->data_ptr);
+    free(string_ptr);
+}
+
+st0_string* st0_string_utf8_create(uint32_t size) {
+    uint32_t i;
+    st0_string* string_ptr = malloc(sizeof(st0_string));
+
+    string_ptr->type = ST0_TYPE_STRING_UTF8;
+    string_ptr->data_ptr = malloc(sizeof(char8_t) * size);
+    string_ptr->size = size;
+
+    for (i = 0; i < size; i++) {
+        ((char8_t*)(string_ptr->data_ptr))[i] = 0;
+    }
+
+    return string_ptr;
+}
+
+/* end of string functions */
