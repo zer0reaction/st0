@@ -10,11 +10,14 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 #define ST0_INTERNAL
 #define ST0_DEBUG
-#include "st0.h"
 
+#include "st0.h"
 #include <stdlib.h>
 #include <stdio.h>
+
+#ifdef ST0_DEBUG
 #include <assert.h>
+#endif
 
 void st0_list_destroy(st0_list* list) {
     free(list->data_ptr);
@@ -83,6 +86,22 @@ void st0_list_push(st0_list* list, uint32_t pos, void* value_ptr) {
         }
 
         ((uint32_t*)list->data_ptr)[pos] = *((uint32_t*)value_ptr);
+    }
+}
+
+void st0_list_pop(st0_list* list, void* buffer_ptr, uint32_t pos) {
+    #ifdef ST0_DEBUG
+    assert(ST0_TYPES_COUNT == 1);
+    #endif
+
+    if (list->type == ST0_TYPE_LIST_UINT32) {
+        uint32_t i;
+        *((uint32_t*)buffer_ptr) = ((uint32_t*)list->data_ptr)[pos];
+
+        list->size--;
+        for (i = pos; i < list->size; i++) {
+            ((uint32_t*)list->data_ptr)[i] = ((uint32_t*)list->data_ptr)[i + 1];
+        }
     }
 }
 
