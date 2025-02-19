@@ -11,123 +11,32 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #ifndef ST0_HEADER
 #define ST0_HEADER
 
-#include <stdlib.h>
-#include <stdio.h>
 #include <stdint.h>
-
-typedef unsigned char char8_t;
 
 #ifdef ST0_INTERNAL
 
-/* internal types for function generalization */
+typedef unsigned char char8_t;
+
+typedef enum {
+    ST0_TYPE_LIST_UINT32,
+    ST0_TYPES_COUNT
+} st0_type;
 
 typedef struct {
+    st0_type type;
     void* data_ptr;
     uint32_t size;
 } st0_list;
 
-typedef struct {
-    char8_t* data_ptr;
-    uint32_t allocated_bytes; /* that means we include null char here */
-    uint32_t used_bytes;      /* and also here */
-} st0_string;
-
-/* list types */
-
-typedef struct {
-    uint32_t* data_ptr;
-    uint32_t size;
-} st0_list_uint32;
-
-typedef struct {
-    int32_t* data_ptr;
-    uint32_t size;
-} st0_list_int32;
-
-typedef struct {
-    uint64_t* data_ptr;
-    uint32_t size;
-} st0_list_uint64;
-
-typedef struct {
-    int64_t* data_ptr;
-    uint32_t size;
-} st0_list_int64;
-
-/* string types */
-
-typedef struct {
-    char8_t* data_ptr;
-    uint32_t allocated_bytes; /* that means we include null char here */
-    uint32_t used_bytes;      /* and also here */
-} st0_string_utf8;
-
 #else
 
 typedef void st0_list;
-typedef void st0_string;
-typedef void st0_list_uint32;
-typedef void st0_list_int32;
-typedef void st0_list_uint64;
-typedef void st0_list_int64;
-typedef void st0_string_utf8;
 
 #endif
 
-/* general list functions */
+void st0_list_destroy(st0_list* list);
+void st0_list_set_value(st0_list* list, uint32_t pos, void* value_ptr);
 
-void     st0_list_destroy(st0_list* list_ptr);
-uint32_t st0_list_get_size(st0_list* list_ptr);
-
-/* uint32 list */
-
-st0_list_uint32* st0_list_uint32_create(uint32_t size);
-void             st0_list_uint32_set_value(st0_list_uint32* list_ptr, uint32_t pos, uint32_t val);
-uint32_t         st0_list_uint32_get_value(st0_list_uint32* list_ptr, uint32_t pos);
-void             st0_list_uint32_push_back(st0_list_uint32* list_ptr, uint32_t val);
-uint32_t         st0_list_uint32_pop_back(st0_list_uint32* list_ptr);
-void             st0_list_uint32_push(st0_list_uint32* list_ptr, uint32_t pos, uint32_t val);
-uint32_t         st0_list_uint32_pop(st0_list_uint32* list_ptr, uint32_t pos);
-
-/* int32 list */
-
-st0_list_int32* st0_list_int32_create(uint32_t size);
-void            st0_list_int32_set_value(st0_list_int32* list_ptr, uint32_t pos, int32_t val);
-int32_t         st0_list_int32_get_value(st0_list_int32* list_ptr, uint32_t pos);
-void            st0_list_int32_push_back(st0_list_int32* list_ptr, int32_t val);
-int32_t         st0_list_int32_pop_back(st0_list_int32* list_ptr);
-void            st0_list_int32_push(st0_list_int32* list_ptr, uint32_t pos, int32_t val);
-int32_t         st0_list_int32_pop(st0_list_int32* list_ptr, uint32_t pos);
-
-/* uint64 list */
-
-st0_list_uint64* st0_list_uint64_create(uint32_t size);
-void             st0_list_uint64_set_value(st0_list_uint64* list_ptr, uint32_t pos, uint64_t val);
-uint64_t         st0_list_uint64_get_value(st0_list_uint64* list_ptr, uint32_t pos);
-void             st0_list_uint64_push_back(st0_list_uint64* list_ptr, uint64_t val);
-uint64_t         st0_list_uint64_pop_back(st0_list_uint64* list_ptr);
-void             st0_list_uint64_push(st0_list_uint64* list_ptr, uint32_t pos, uint64_t val);
-uint64_t         st0_list_uint64_pop(st0_list_uint64* list_ptr, uint32_t pos);
-
-/* int64 list */
-
-st0_list_int64* st0_list_int64_create(uint32_t size);
-void            st0_list_int64_set_value(st0_list_int64* list_ptr, uint32_t pos, int64_t val);
-int64_t         st0_list_int64_get_value(st0_list_int64* list_ptr, uint32_t pos);
-void            st0_list_int64_push_back(st0_list_int64* list_ptr, int64_t val);
-int64_t         st0_list_int64_pop_back(st0_list_int64* list_ptr);
-void            st0_list_int64_push(st0_list_int64* list_ptr, uint32_t pos, int64_t val);
-int64_t         st0_list_int64_pop(st0_list_int64* list_ptr, uint32_t pos);
-
-/* general string functions */
-
-uint32_t         st0_string_get_allocated_bytes(st0_string* string_ptr);
-uint32_t         st0_string_get_used_bytes(st0_string* string_ptr);
-void             st0_string_destroy(st0_string* string_ptr);
-
-/* utf8 string */
-
-st0_string_utf8* st0_string_utf8_create(uint32_t allocated_bytes);
-void             st0_string_utf8_assign_to_literal(st0_string_utf8* string_ptr, const char* literal_ptr);
+st0_list* st0_list_uint32_create(uint32_t size);
 
 #endif
