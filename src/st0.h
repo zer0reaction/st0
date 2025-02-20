@@ -35,4 +35,4 @@ void st0_list_destroy(st0_list* list_ptr) {
 #define st0_list_get(list, type, pos) \
     ((type*)(list.data_ptr))[pos]
 
-#endif
+#endif // ST0_HEADER
